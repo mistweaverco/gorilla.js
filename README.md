@@ -4,6 +4,13 @@ gorilla.js - the only javascript utility library you'll ever need.
 
 
 
+## Supported Browsers
+
+![](supported-browsers.png)
+
+
+
+
 ## Methods
 
   - [gorilla.adBlockEnabled](#gorillaadblockenabled)
