@@ -3,7 +3,17 @@ gorilla.js
 
 ![](icon.png)
 
-gorilla.js - the only javascript utility library you'll ever need.
+gorilla.js 🦍 - the only javascript utility library 🦄 you'll ever need.
+
+
+
+## Small
+
+Minified 5,580 bytes 💪;
+Minified and Gzipped only 1,858 bytes 🔥!
+
+jQuery 3.0.0-alpha1 is 84,522 bytes 😢;
+Minified and Gzipped still a whopping 🍔 29,475 bytes 🙈.
 
 
 
