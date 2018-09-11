@@ -1,4 +1,4 @@
-gorilla.getUrlParams = function(url) {
+gorilla.getURLParams = function(url) {
         "use strict";
         let params = {};
         let link = document.createElement("a");
