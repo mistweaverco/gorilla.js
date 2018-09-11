@@ -29,7 +29,7 @@ gorilla.after = function(el, afterEl) {
 gorilla.ajax = function(opts) {
         "use strict";
         return new Promise((resolve, reject) => {
-                let getTimestamp, header, xhr;
+                let getTimestamp, xhr;
                 opts = opts || {};
                 opts.method = opts.method || "GET";
                 opts.method = opts.method.toUpperCase();
@@ -49,6 +49,19 @@ gorilla.ajax = function(opts) {
                                         arr.push(encodeURIComponent(key) +
                                                         "=" +
                                                         encodeURIComponent(p[key]));
+                                }
+                        }
+                        return arr;
+                };
+                const formatHeaders = (h) => {
+                        let arr, key;
+                        arr = [];
+                        for (key in h) {
+                                if (Reflect.has(h, key)) {
+                                        arr.push({
+                                                key: key,
+                                                value: h[key]
+                                        });
                                 }
                         }
                         return arr;
@@ -73,14 +86,10 @@ gorilla.ajax = function(opts) {
                 xhr.open(opts.method, opts.url);
                 xhr.setRequestHeader("Content-type", opts.requestContentType);
                 if (opts.headers) {
-                        for (header in opts.headers) {
-                                if (Reflect.has(opts.headers, header)) {
-                                        xhr.setRequestHeader(
-                                                header.key,
-                                                header.value
-                                        );
-                                }
-                        }
+                        const headers = formatHeaders(opts.headers);
+                        headers.forEach((header) => {
+                                xhr.setRequestHeader(header.key, header.value);
+                        });
                 }
                 if (opts.method === "GET") {
                         xhr.send(null);

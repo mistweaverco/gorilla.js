@@ -63,12 +63,11 @@ gorilla.ajax({
         method: "POST",
         cache: true,
         requestContentType: "application/x-www-form-urlencoded",
-        headers: [
-                {
-                        key: "Foo",
-                        value: "Moo"
-                }
-        ],
+        headers: {
+                "X-Gorilla-Custom-Header": "This is really awesome!",
+                "X-Gorilla-Custom-Header2": "Gorilla Fam for life!",
+                "X-Gorilla-Style": "Best style in the universe!"
+        },
         params: {
                 format: "json",
                 query: "all"
