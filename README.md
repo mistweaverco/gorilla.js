@@ -85,71 +85,33 @@ gorilla.ajax({
 Consecutive ajax requests made easy and without callback hell:
 
 ```javascript
-gorilla.ajax({
-        url: "pokemon/items.json",
-        method: "POST",
-        cache: true,
-        requestContentType: "application/x-www-form-urlencoded",
-        headers: [
-                {
-                        key: "Foo",
-                        value: "Moo"
-                }
-        ],
-        params: {
-                format: "json",
-                query: "all"
-        }
+// first, load pokemon items
+gorilla.ajax({ url: "pokemon/items.json" })
+.then((pokemonItems) => {
+        console.log(JSON.parse(pokemonItems));
+        // after pokemon items have been loaded, load pokemon skills
+        return gorilla.ajax({ url: "pokemon/skills.json" });
 })
-.then((result) => {
-        console.log(JSON.parse(result));
-        return gorilla.ajax({
-                url: "pokemon/skills.json",
-                method: "POST",
-                cache: true,
-                requestContentType: "application/x-www-form-urlencoded",
-                headers: [
-                        {
-                                key: "Foo",
-                                value: "Moo"
-                        }
-                ],
-                params: {
-                        format: "json",
-                        query: "all"
-                }
-        });
+.catch((errPokemonItems) => {
+        // loading pokemon items failed
+        console.log(errPokemonItems);
 })
-.catch((err) => {
-        console.log(err);
+.then((pokemonSkills) => {
+        console.log(JSON.parse(pokemonSkills));
+        // after pokemon skills have been loaded, load pokemon types
+        return gorilla.ajax({ url: "pokemon/types.json" });
 })
-.then((result) => {
-        console.log(JSON.parse(result));
-        return gorilla.ajax({
-                url: "pokemon/types.json",
-                method: "POST",
-                cache: true,
-                requestContentType: "application/x-www-form-urlencoded",
-                headers: [
-                        {
-                                key: "Foo",
-                                value: "Moo"
-                        }
-                ],
-                params: {
-                        format: "json",
-                        query: "all"
-                }
-        });
+.catch((errPokemonSkills) => {
+        // loading pokemon skills failed
+        console.log(errPokemonSkills);
 })
-.catch((err) => {
-        console.log(err);
+.then((pokemonTypes) => {
+        // these are the pokemon types
+        console.log(JSON.parse(pokemonTypes));
 })
-.then((result) => {
-        console.log(JSON.parse(result));
-})
-.catch((err) => {
-        console.log(err);
+.catch((errPokemonTypes) => {
+        // loading pokemon types failed
+        console.log(errPokemonTypes);
 });
 ```
 
