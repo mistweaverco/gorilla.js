@@ -29,10 +29,11 @@ gorilla.js - the only javascript utility library you'll ever need.
 
 ### gorilla.adBlockEnabled
 
-Check if user is using an AdBlocker
+Check if user is using an AdBlocker and returns a promise with the result.
 
 ```javascript
-gorilla.adBlockEnabled(function(adBlockEnabled){
+gorilla.adBlockEnabled()
+.then((adBlockEnabled) => {
         window.console.log("Client " + ((adBlockEnabled) ? "is" : "isn't") + " using AdBlock");
 });
 ```
@@ -54,11 +55,11 @@ gorilla.find("li").get(2).after(newListElement);
 
 ### gorilla.ajax
 
-Simple ajax request wrapper.
+Simple ajax request wrapper which returns a promise.
 
 ```javascript
 gorilla.ajax({
-        url: "/pokemon.json",
+        url: "pokemon/pokedex.json",
         method: "POST",
         cache: true,
         requestContentType: "application/x-www-form-urlencoded",
@@ -67,18 +68,90 @@ gorilla.ajax({
                         key: "Foo",
                         value: "Moo"
                 }
-        ]
+        ],
         params: {
-                format: "json"
+                format: "json",
                 query: "all"
         }
-        cb: function( err, result ) {
-                if (!err)
-                        console.log(result);
-        }
+})
+.then((result) => {
+        console.log(result);
+})
+.catch((err) => {
+        console.log(err);
 });
 ```
 
+Consecutive ajax requests made easy and without callback hell:
+
+```javascript
+gorilla.ajax({
+        url: "pokemon/items.json",
+        method: "POST",
+        cache: true,
+        requestContentType: "application/x-www-form-urlencoded",
+        headers: [
+                {
+                        key: "Foo",
+                        value: "Moo"
+                }
+        ],
+        params: {
+                format: "json",
+                query: "all"
+        }
+})
+.then((result) => {
+        console.log(JSON.parse(result));
+        return gorilla.ajax({
+                url: "pokemon/skills.json",
+                method: "POST",
+                cache: true,
+                requestContentType: "application/x-www-form-urlencoded",
+                headers: [
+                        {
+                                key: "Foo",
+                                value: "Moo"
+                        }
+                ],
+                params: {
+                        format: "json",
+                        query: "all"
+                }
+        });
+})
+.catch((err) => {
+        console.log(err);
+})
+.then((result) => {
+        console.log(JSON.parse(result));
+        return gorilla.ajax({
+                url: "pokemon/types.json",
+                method: "POST",
+                cache: true,
+                requestContentType: "application/x-www-form-urlencoded",
+                headers: [
+                        {
+                                key: "Foo",
+                                value: "Moo"
+                        }
+                ],
+                params: {
+                        format: "json",
+                        query: "all"
+                }
+        });
+})
+.catch((err) => {
+        console.log(err);
+})
+.then((result) => {
+        console.log(JSON.parse(result));
+})
+.catch((err) => {
+        console.log(err);
+});
+```
 
 
 ### gorilla.append
@@ -240,31 +313,32 @@ gorilla.find("a").get(0).html("This is a Hyperlink.");
 ### gorilla.loadCSS
 
 Easy to use CSS file loader.
-Creates a `<link rel="stylesheet" href="">` tag and fires a callback function.
+Creates a `<link rel="stylesheet" href="">` tag and returns a promise.
 
 ```javascript
-gorilla.loadCSS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.css", function(err, obj) {
-        if (err)
-                return console.log('error loading css file..');
-        alert("all good..");
+gorilla.loadCSS("https://cdn.sstatic.net/Shared/stacks.css")
+.then((el) => {
+        // link tag
+        console.log(el);
+})
+.catch((err) => {
+        console.log(err);
 });
 ```
 
-or multiple files at once..
+or multiple files, one by one..
 
 ```javascript
-var cssfiles = [
-        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.css",
-        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.css"
-];
-var loaded = [];
-gorilla.loadCSS(cssfiles, function(err, obj) {
-        if (err)
-                return console.log("error loading css file..");
-        loaded.push(obj.src);
-        if (cssfiles.length === loaded.length)
-                alert("all files loaded..");
-});
+gorilla.loadCSS("https://cdn.sstatic.net/Shared/stacks.css")
+.then((el) => {
+	console.log(el);
+	return gorilla.loadCSS("https://cdn.sstatic.net/Sites/stackoverflow/primary-unified.css");
+})
+.catch((err) => console.log(err))
+.then((el) => {
+	console.log(el);
+})
+.catch((err) => console.log(err));
 ```
 
 
@@ -272,31 +346,32 @@ gorilla.loadCSS(cssfiles, function(err, obj) {
 ### gorilla.loadJS
 
 Easy to use JavaScript file loader.
-Create a `<script>` tag and fires a callback function.
+Create a `<script>` tag and returns a promise.
 
 ```javascript
-gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js", function(err, obj) {
-        if (err)
-                return console.log('error loading js file..');
-        alert("all good..");
+gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js")
+.then((el) => {
+        // script tag
+        console.log(el);
+})
+.catch((err) => {
+        console.log(err);
 });
 ```
 
-or multiple files at once..
+or multiple files, one by one..
 
 ```javascript
-var jsfiles = [
-        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js",
-        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"
-];
-var loaded = [];
-gorilla.loadJS(jsfiles, function(err, obj) {
-        if (err)
-                return console.log("error loading js file..");
-        loaded.push(obj.src);
-        if (jsfiles.length === loaded.length)
-                alert("all files loaded..");
-});
+gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js")
+.then((el) => {
+	console.log(el);
+	return gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js");
+})
+.catch((err) => console.log(err))
+.then((el) => {
+	console.log(el);
+})
+.catch((err) => console.log(err));
 ```
 
 ### gorilla.on
@@ -342,3 +417,4 @@ gorilla.find("li").get(0).remove();
 ### Icon
 
 [Icon](icon.png) (free for commercial use) made by [Martin Berube](https://twitter.com/imaginatoon).
+

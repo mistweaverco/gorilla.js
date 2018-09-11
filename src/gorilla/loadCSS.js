@@ -1,28 +1,19 @@
-gorilla.loadCSS = function(urls, cb) {
+gorilla.loadCSS = function(url) {
         "use strict";
-        let i, len;
-        const appendCSS = function(url, callback) {
+        return new Promise((resolve, reject) => {
                 let s = gorilla
                         .create("link")
                         .attr("rel", "stylesheet")
                         .attr("href", url);
-                if (cb) {
-                        s.on("error", function() {
-                                callback(true, this);
-                        });
-                        s.on("load", function() {
-                                callback(false, this);
-                        });
-                }
+                s.on("error", function(err) {
+                        reject(err);
+                });
+                s.on("load", function() {
+                        resolve(this);
+                });
                 return gorilla
                         .find("script")
                         .get(0)
                         .prepend(s);
-        };
-        if (typeof urls === "string") {
-                urls = [urls];
-        }
-        for (i = 0, len = urls.length; i < len; i++) {
-                appendCSS(urls[i], cb);
-        }
+        });
 };
