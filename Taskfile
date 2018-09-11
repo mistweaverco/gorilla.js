@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function build {
+        cat src/gorilla.js src/gorilla/*.js > dist/gorilla.js
+        babel-minify dist/gorilla.js --out-file dist/gorilla.min.js
+}
+
+function start-server {
+        # https://github.com/zeit/serve
+        serve dist
+}
+
+function clean {
+        rm -rf ./dist/*
+}
+
+function tasks {
+        compgen -A function | grep -v "^_"
+}
+
+function help {
+        echo "$0 <task> <args>"
+        echo "Tasks:"
+        tasks | cat -n
+}
+
+${@:-tasks}
+

@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "totalCount": 2,
+  "items": [
+    {
+      "name": "Pikachu"
+    },
+    {
+      "name": "Rattle"
+    }
+  ]
+}
