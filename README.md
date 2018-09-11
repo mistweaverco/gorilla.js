@@ -14,7 +14,7 @@ gorilla.js - the only javascript utility library you'll ever need.
   - [gorilla.before](#gorillabefore)
   - [gorilla.compareJSON](#gorillacomparejson)
   - [gorilla.create](#gorillacreate)
-  - [gorilla.domready](#gorillaomready)
+  - [gorilla.DOMReady](#gorilladomready)
   - [gorilla.find](#gorillafind)
   - [gorilla.getUnixtime](#gorillagetunixtime)
   - [gorilla.getURLParams](#gorillageturlparams)
@@ -150,7 +150,7 @@ console.log(gorilla.compareJSON(json1, json2);
 
 // This should return false, because they lack have the same
 // properties, but not the same values for each property
-console.log(gorilla.compareJson(json3, json4);
+console.log(gorilla.compareJSON(json3, json4);
 ```
 
 
@@ -167,12 +167,12 @@ gorilla.create("input")
 
 
 
-### gorilla.domready
+### gorilla.DOMReady
 
-Simple domready wrapper.
+Simple DOMReady wrapper.
 
 ```javascript
-gorilla.domready(function() {
+gorilla.DOMReady(function() {
         alert("dom is ready!");
 });
 ```
