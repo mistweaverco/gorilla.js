@@ -1,26 +1,5 @@
 // eslint-disable-next-line
 let gorilla = {};
-gorilla.adBlockEnabled = function() {
-        "use strict";
-        return new Promise((resolve) => {
-                const js = gorilla
-                        .create("script")
-                        .attr("src", "https://stats.t-online.de/js/ads.js")
-                        .on("error", function() {
-                                // clean up
-                                this.parentNode.removeChild(this);
-                                // adBlock is enabled
-                                resolve(true);
-                        })
-                        .on("load", function() {
-                                // clean up
-                                this.parentNode.removeChild(this);
-                                // adBlock is NOT enabled
-                                resolve(false);
-                        });
-                document.body.appendChild(js);
-        });
-};
 gorilla.after = function(el, afterEl) {
         "use strict";
         el.parentNode.insertBefore(afterEl, el.nextElementSibling);
@@ -158,28 +137,13 @@ gorilla.compareJSON = function(json1, json2) {
         };
         return aIsInB(json1, json2) && aIsInB(json2, json1);
 };
-gorilla.create = function(name, contents, attrs, is) {
+gorilla.create = function(name, options) {
         "use strict";
-        let attrsCallback, contentsCallback, el;
-        if (is) el = document.createElement(name, is);
-        else el = document.createElement(name);
-        contentsCallback = function(content) {
-                el.appendChild(content);
-        };
-        attrsCallback = function(attr) {
-                el.setAttribute(attr[0], attr[1]);
-        };
-        if (contents) {
-                if (typeof contents === "string") {
-                        el.innerHTML = contents;
-                } else if (typeof contents === "object" && contents.length) {
-                        contents.forEach(contentsCallback);
-                } else if (typeof contents === "object" && !contents.length) {
-                        el.appendChild(contents);
-                }
-        }
-        if (attrs) {
-                attrs.forEach(attrsCallback);
+        let el;
+        if (options) {
+                el = document.createElement(name, options);
+        } else {
+                el = document.createElement(name);
         }
         return gorilla.find(el).get(0);
 };
@@ -393,5 +357,41 @@ gorilla.prev = function(el) {
 gorilla.remove = function(el) {
         "use strict";
         el.parentNode.removeChild(el);
+};
+gorilla.serialize = (obj, opts) => {
+        "use strict";
+        opts = opts || {};
+        if (obj.tagName && obj.tagName.toLowerCase() === "form") {
+                let formData = new FormData(obj);
+                let json = {};
+                formData.forEach(function(value, key) {
+                        json[key] = value;
+                });
+                return gorilla.serialize(json);
+        }
+        let str = [];
+        let delimiter = opts.delimiter || "&";
+        let q = opts.q || false;
+
+        for (let key in obj) {
+                if (Reflect.has(obj, key)) {
+                        switch (typeof obj[key]) {
+                                case "boolean":
+                                case "string":
+                                case "number":
+                                        str[str.length] = key + "=" + obj[key];
+                                        break;
+                                case "object":
+                                        str[str.length] = gorilla.serialize(
+                                                obj[key],
+                                                delimiter
+                                        );
+                                        break;
+                                default:
+                                        break;
+                        }
+                }
+        }
+        return (q === true ? "?" : "") + str.join(delimiter);
 };
 gorilla.version = "1.0.0";

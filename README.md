@@ -26,7 +26,6 @@ Minified and Gzipped still a whopping 🍔 29,475 bytes 🙈.
 
 ## Methods
 
-  - [gorilla.adBlockEnabled](#gorillaadblockenabled)
   - [gorilla.after](#gorillaafter)
   - [gorilla.ajax](#gorillaajax)
   - [gorilla.append](#gorillappend)
@@ -44,19 +43,7 @@ Minified and Gzipped still a whopping 🍔 29,475 bytes 🙈.
   - [gorilla.on](#gorillaon)
   - [gorilla.prepend](#gorillaprepend)
   - [gorilla.remove](#gorillaremove)
-
-
-
-### gorilla.adBlockEnabled
-
-Check if user is using an AdBlocker and returns a promise with the result.
-
-```javascript
-gorilla.adBlockEnabled()
-.then((adBlockEnabled) => {
-        window.console.log("Client " + ((adBlockEnabled) ? "is" : "isn't") + " using AdBlock");
-});
-```
+  - [gorilla.serialize](#gorillaserialize)
 
 
 
@@ -312,12 +299,12 @@ or multiple files, one by one..
 ```javascript
 gorilla.loadCSS("https://cdn.sstatic.net/Shared/stacks.css")
 .then((el) => {
-	console.log(el);
-	return gorilla.loadCSS("https://cdn.sstatic.net/Sites/stackoverflow/primary-unified.css");
+        console.log(el);
+        return gorilla.loadCSS("https://cdn.sstatic.net/Sites/stackoverflow/primary-unified.css");
 })
 .catch((err) => console.log(err))
 .then((el) => {
-	console.log(el);
+        console.log(el);
 })
 .catch((err) => console.log(err));
 ```
@@ -345,12 +332,12 @@ or multiple files, one by one..
 ```javascript
 gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js")
 .then((el) => {
-	console.log(el);
-	return gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js");
+        console.log(el);
+        return gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js");
 })
 .catch((err) => console.log(err))
 .then((el) => {
-	console.log(el);
+        console.log(el);
 })
 .catch((err) => console.log(err));
 ```
@@ -389,6 +376,24 @@ Removes a node and all its children.
 ```javascript
 // Removes the first li tag found
 gorilla.find("li").get(0).remove();
+```
+
+
+
+### gorilla.serialize
+
+Encode a set of form elements (or an JSON-Object) as a string for submission.
+
+Serialize Form-data:
+
+```javascript
+console.log(gorilla.serialize(gorilla.find("form").get(0)));
+```
+
+Serialze JSON-Object:
+
+```javascript
+console.log(gorilla.serialize({ foo: true, bar: { baz: false }, text: "moo" });
 ```
 
 

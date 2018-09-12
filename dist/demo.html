@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Demo</title>
-  </head>
-  <body>
-    <div>
-      <ul>
-        <li>ul 1 li 1</li>
-        <li>ul 1 li 2</li>
-      </ul>
-    </div>
-    <div>
-      <ul>
-        <li>ul 2 li 1</li>
-        <li>ul 2 li 2</li>
-        <li><a href="#moo">only link here</a></li>
-      </ul>
-    </div>
-    <script src="gorilla.min.js"></script>
-    <!-- <script>go = new go();</script> -->
-  </body>
+        <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width" />
+                <title>Demo</title>
+        </head>
+        <body>
+                <form>
+                        <input type="hidden" name="id" />
+                        <input type="text" name="name" />
+                        <input type="text" name="title" />
+                        <input type="text" name="tags[0]" value="javascript" />
+                        <input type="text" name="tags[1]" value="golang" />
+                        <input type="text" name="tags[2]" value="php" />
+                        <textarea name="content"></textarea>
+                </form>
+                <div>
+                        <ul>
+                                <li>ul 1 li 1</li>
+                                <li>ul 1 li 2</li>
+                        </ul>
+                </div>
+                <div>
+                        <ul>
+                                <li>ul 2 li 1</li>
+                                <li>ul 2 li 2</li>
+                                <li><a href="#moo">only link here</a></li>
+                        </ul>
+                </div>
+                <script src="gorilla.min.js"></script>
+        </body>
 </html>
