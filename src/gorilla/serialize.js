@@ -1,6 +1,7 @@
 gorilla.serialize = (obj, opts) => {
         "use strict";
         opts = opts || {};
+
         if (obj.tagName && obj.tagName.toLowerCase() === "form") {
                 let formData = new FormData(obj);
                 let json = {};
@@ -9,6 +10,7 @@ gorilla.serialize = (obj, opts) => {
                 });
                 return gorilla.serialize(json);
         }
+
         let str = [];
         let delimiter = opts.delimiter || "&";
         let q = opts.q || false;

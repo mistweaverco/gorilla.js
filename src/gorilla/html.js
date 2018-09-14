@@ -2,10 +2,15 @@ gorilla.html = function(el, value) {
         "use strict";
         let returnvalue;
         returnvalue = el;
-        if (typeof value === "string") {
-                el.innerHTML = value;
-        } else {
-                return el.innerHTML;
+        switch (typeof value === "string") {
+                case "string":
+                case "boolean":
+                case "number":
+                        el.innerHTML = value;
+                        break;
+                default:
+                        returnvalue = false;
+                        break;
         }
         return returnvalue;
 };

@@ -274,10 +274,15 @@ gorilla.html = function(el, value) {
         "use strict";
         let returnvalue;
         returnvalue = el;
-        if (typeof value === "string") {
-                el.innerHTML = value;
-        } else {
-                return el.innerHTML;
+        switch (typeof value === "string") {
+                case "string":
+                case "boolean":
+                case "number":
+                        el.innerHTML = value;
+                        break;
+                default:
+                        returnvalue = false;
+                        break;
         }
         return returnvalue;
 };
@@ -361,6 +366,7 @@ gorilla.remove = function(el) {
 gorilla.serialize = (obj, opts) => {
         "use strict";
         opts = opts || {};
+
         if (obj.tagName && obj.tagName.toLowerCase() === "form") {
                 let formData = new FormData(obj);
                 let json = {};
@@ -369,6 +375,7 @@ gorilla.serialize = (obj, opts) => {
                 });
                 return gorilla.serialize(json);
         }
+
         let str = [];
         let delimiter = opts.delimiter || "&";
         let q = opts.q || false;
