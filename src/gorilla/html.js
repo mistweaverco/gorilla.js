@@ -1,8 +1,9 @@
 gorilla.html = function(el, value) {
         "use strict";
+        const valueType = typeof value;
         let returnvalue;
         returnvalue = el;
-        switch (typeof value === "string") {
+        switch (valueType) {
                 case "string":
                 case "boolean":
                 case "number":
