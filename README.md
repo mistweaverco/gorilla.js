@@ -25,7 +25,7 @@ Minified and Gzipped still a whopping 🍔 29,475 bytes 🙈.
 
 Don't be sad, we got you IE >= 9 users covered ❤.
 
-(Even if this means supporting 7 years old software 🤷‍♀️).
+(Even if this means supporting 7 years old software 🤷).
 
 There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
 
