@@ -6,6 +6,11 @@ function __show_tasks {
         compgen -A function | grep -v "^_"
 }
 
+function _logger {
+        local d=$(date --rfc-3339=ns)
+        echo -ne "$d\t$@\n"
+}
+
 function _concat-js {
         outfile=${1:-gorilla.js}
         outdir=${2:-dist}
@@ -34,6 +39,17 @@ function build-compat {
         cat tmp/shims.js tmp/gorilla.js > tmp/gorilla.shimmed.js
         $NODE_MODULES_BIN/babel tmp/gorilla.shimmed.js --out-file dist/gorilla.compat.js
         _minify-js "gorilla.compat.js" "gorilla.compat.min.js"
+}
+
+function watch {
+        local watchdir="./src/"
+        _logger "Watcher started"
+        inotifywait -m -r -e close_write --format '%w%f' "${watchdir}" | \
+        while read events; do
+                _logger "Build triggered"
+                Task build
+                _logger "Build finished"
+        done
 }
 
 function deploy {
