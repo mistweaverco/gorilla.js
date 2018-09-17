@@ -22,13 +22,31 @@ gorilla.serialize = (arr, opts) => {
                         case "boolean":
                         case "string":
                         case "number":
-                                data.push(v[0] + "=" + encodeURIComponent(v[1]));
+                                if (opts.parentName) {
+                                        data.push(opts.parentName +
+                                                        "[" +
+                                                        v[0] +
+                                                        "]=" +
+                                                        encodeURIComponent(v[1]));
+                                } else {
+                                        data.push(v[0] +
+                                                        "=" +
+                                                        encodeURIComponent(v[1]));
+                                }
                                 break;
                         case "object":
                                 if (v[1].length) {
+                                        if (opts.parentName) {
+                                                v[0] =
+                                                        opts.parentName +
+                                                        "[" +
+                                                        v[0] +
+                                                        "]";
+                                        }
                                         data.push(gorilla.serialize(v[1], {
                                                         delimiter:
-                                                                opts.delimiter
+                                                                opts.delimiter,
+                                                        parentName: v[0]
                                                 }));
                                 }
                                 break;

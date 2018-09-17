@@ -2253,41 +2253,53 @@ gorilla.remove = function (el) {
 
         el.parentNode.removeChild(el);
 };
-gorilla.serialize = function (obj, opts) {
+gorilla.serialize = function (arr, opts) {
         "use strict";
 
         opts = opts || {};
 
-        if (obj.tagName && obj.tagName.toLowerCase() === "form") {
-                var formData = new FormData(obj);
-                var json = {};
-                formData.forEach(function (value, key) {
-                        json[key] = value;
+        if (arr.tagName && arr.tagName === "FORM") {
+                var array = [],
+                    items = arr.elements;
+                gorilla.each(items, function (el) {
+                        if (el.name && el.name !== "") {
+                                array.push([el.name, el.value]);
+                        }
                 });
-                return gorilla.serialize(json);
+                return gorilla.serialize(array);
         }
 
-        var str = [];
+        var data = [];
         var delimiter = opts.delimiter || "&";
         var q = opts.q || false;
 
-        for (var key in obj) {
-                if (Reflect.has(obj, key)) {
-                        switch (_typeof(obj[key])) {
-                                case "boolean":
-                                case "string":
-                                case "number":
-                                        str[str.length] = key + "=" + obj[key];
-                                        break;
-                                case "object":
-                                        str[str.length] = gorilla.serialize(obj[key], delimiter);
-                                        break;
-                                default:
-                                        break;
-                        }
+        gorilla.each(arr, function (v) {
+                switch (_typeof(v[1])) {
+                        case "boolean":
+                        case "string":
+                        case "number":
+                                if (opts.parentName) {
+                                        data.push(opts.parentName + "[" + v[0] + "]=" + encodeURIComponent(v[1]));
+                                } else {
+                                        data.push(v[0] + "=" + encodeURIComponent(v[1]));
+                                }
+                                break;
+                        case "object":
+                                if (v[1].length) {
+                                        if (opts.parentName) {
+                                                v[0] = opts.parentName + "[" + v[0] + "]";
+                                        }
+                                        data.push(gorilla.serialize(v[1], {
+                                                delimiter: opts.delimiter,
+                                                parentName: v[0]
+                                        }));
+                                }
+                                break;
+                        default:
+                                break;
                 }
-        }
-        return (q === true ? "?" : "") + str.join(delimiter);
+        });
+        return (q === true ? "?" : "") + data.join(delimiter);
 };
 gorilla.stringFormat = function () {
         "use strict";
