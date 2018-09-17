@@ -1,21 +1,52 @@
 #!/bin/bash
 
+NODE_MODULES_BIN="./node_modules/.bin"
+
+function __show_tasks {
+        compgen -A function | grep -v "^_"
+}
+
+function _concat-js {
+        outfile=${1:-gorilla.js}
+        outdir=${2:-dist}
+        cat src/gorilla.js src/gorilla/*.js > "$outdir/$outfile"
+}
+
+function _concat-shims {
+        cat lib/es-shims/promise.min.js \
+                > "tmp/shims.js"
+}
+
+function _minify-js {
+        infile=${1:-gorilla.js}
+        outfile=${2:-gorilla.min.js}
+        $NODE_MODULES_BIN/babel-minify dist/"$infile" --out-file dist/"$outfile"
+}
+
 function build {
-        cat src/gorilla.js src/gorilla/*.js > dist/gorilla.js
-        babel-minify dist/gorilla.js --out-file dist/gorilla.min.js
+        _concat-js
+        _minify-js
+}
+
+function build-compat {
+        _concat-js "gorilla.js" "tmp"
+        _concat-shims
+        cat tmp/shims.js tmp/gorilla.js > tmp/gorilla.shimmed.js
+        $NODE_MODULES_BIN/babel tmp/gorilla.shimmed.js --out-file dist/gorilla.compat.js
+        _minify-js "gorilla.compat.js" "gorilla.compat.min.js"
+}
+
+function deploy {
+        ssh root@superevilmegaco.com "cd /www/gorilla.moe/cdn/htdocs/gorilla.js/ && git pull origin master"
 }
 
 function start-server {
         # https://github.com/zeit/serve
-        serve dist
+        $NODE_MODULES_BIN/serve dist
 }
 
 function clean {
         rm -rf ./dist/*
-}
-
-function tasks {
-        compgen -A function | grep -v "^_"
 }
 
 function help {
