@@ -1,38 +1,40 @@
-gorilla.serialize = (obj, opts) => {
+gorilla.serialize = (arr, opts) => {
         "use strict";
         opts = opts || {};
 
-        if (obj.tagName && obj.tagName.toLowerCase() === "form") {
-                let formData = new FormData(obj);
-                let json = {};
-                formData.forEach(function(value, key) {
-                        json[key] = value;
+        if (arr.tagName && arr.tagName === "FORM") {
+                let array = [],
+                        items = arr.elements;
+                gorilla.each(items, (el) => {
+                        if (el.name && el.name !== "") {
+                                array.push([el.name, el.value]);
+                        }
                 });
-                return gorilla.serialize(json);
+                return gorilla.serialize(array);
         }
 
-        let str = [];
+        let data = [];
         let delimiter = opts.delimiter || "&";
         let q = opts.q || false;
 
-        for (let key in obj) {
-                if (Reflect.has(obj, key)) {
-                        switch (typeof obj[key]) {
-                                case "boolean":
-                                case "string":
-                                case "number":
-                                        str[str.length] = key + "=" + obj[key];
-                                        break;
-                                case "object":
-                                        str[str.length] = gorilla.serialize(
-                                                obj[key],
-                                                delimiter
-                                        );
-                                        break;
-                                default:
-                                        break;
-                        }
+        gorilla.each(arr, (v) => {
+                switch (typeof v[1]) {
+                        case "boolean":
+                        case "string":
+                        case "number":
+                                data.push(v[0] + "=" + encodeURIComponent(v[1]));
+                                break;
+                        case "object":
+                                if (v[1].length) {
+                                        data.push(gorilla.serialize(v[1], {
+                                                        delimiter:
+                                                                opts.delimiter
+                                                }));
+                                }
+                                break;
+                        default:
+                                break;
                 }
-        }
-        return (q === true ? "?" : "") + str.join(delimiter);
+        });
+        return (q === true ? "?" : "") + data.join(delimiter);
 };
