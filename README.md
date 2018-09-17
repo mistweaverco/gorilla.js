@@ -44,6 +44,7 @@ Minified and Gzipped still a whopping 🍔 29,475 bytes 🙈.
   - [gorilla.prepend](#gorillaprepend)
   - [gorilla.remove](#gorillaremove)
   - [gorilla.serialize](#gorillaserialize)
+  - [gorilla.stringFormat](#gorillastringformat)
 
 
 
@@ -394,6 +395,32 @@ Serialze JSON-Object:
 
 ```javascript
 console.log(gorilla.serialize({ foo: true, bar: { baz: false }, text: "moo" });
+```
+
+
+
+### gorilla.stringFormat
+
+Formats a string.
+
+Usage:
+
+```javascript
+console.log(
+  gorilla.stringFormat("I have %i apples and I really %s them.", 1337, "hate")
+);
+```
+
+Or with more human friendly variables (because everything is a string 😜)
+
+```javascript
+console.log(
+  gorilla.stringFormat(
+    "I have %count dogs and I really %mood them.",
+    3,
+    "adore"
+  )
+);
 ```
 
 

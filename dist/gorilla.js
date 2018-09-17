@@ -275,12 +275,14 @@ gorilla.html = function(el, value) {
         const valueType = typeof value;
         let returnvalue;
         returnvalue = el;
-
         switch (valueType) {
                 case "string":
                 case "boolean":
                 case "number":
                         el.innerHTML = value;
+                        break;
+                case "undefined":
+                        returnvalue = el.innerHTML;
                         break;
                 default:
                         returnvalue = false;
@@ -403,4 +405,13 @@ gorilla.serialize = (obj, opts) => {
         }
         return (q === true ? "?" : "") + str.join(delimiter);
 };
+gorilla.stringFormat = (() => {
+        "use strict";
+        return function(str, ...replace) {
+                replace.forEach((re) => {
+                        str = str.replace(/%[^ ]*/, re);
+                });
+                return str;
+        };
+})();
 gorilla.version = "1.0.0";

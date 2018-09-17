@@ -2298,7 +2298,7 @@ gorilla.stringFormat = function () {
                 }
 
                 replace.forEach(function (re) {
-                        str = str.replace(/%[a-z]/, re);
+                        str = str.replace(/%[^ ]*/, re);
                 });
                 return str;
         };
