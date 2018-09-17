@@ -9,6 +9,9 @@ gorilla.html = function(el, value) {
                 case "number":
                         el.innerHTML = value;
                         break;
+                case "undefined":
+                        returnvalue = el.innerHTML;
+                        break;
                 default:
                         returnvalue = false;
                         break;
