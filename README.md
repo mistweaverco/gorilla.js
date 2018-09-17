@@ -435,23 +435,15 @@ Formats a string.
 Usage:
 
 ```javascript
-console.log(
-  gorilla.stringFormat("I have %i apples and I really %s them.", 1337, "hate")
-);
+gorilla.stringFormat("I have %i apples and I really %s them.", 1337, "hate");
 ```
 
 Or with more human friendly variables (because everything is a string 😜)
 
 ```javascript
-console.log(
-  gorilla.stringFormat(
-    "I have %count dogs and I really %mood them.",
-    3,
-    "adore"
-  )
-);
+gorilla.stringFormat("I have %count dogs and I really %mood them.", 3, "adore");
 ```
-
+ 
 
 
 ## Credits
