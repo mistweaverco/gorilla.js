@@ -46,6 +46,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.find](#gorillafind)
   - [gorilla.getUnixtime](#gorillagetunixtime)
   - [gorilla.getURLParams](#gorillageturlparams)
+  - [gorilla.height](#gorillaheight)
   - [gorilla.html](#gorillahtml)
   - [gorilla.loadCSS](#gorillaloadcss)
   - [gorilla.loadJS](#gorillaloadjs)
@@ -54,6 +55,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.remove](#gorillaremove)
   - [gorilla.serialize](#gorillaserialize)
   - [gorilla.stringFormat](#gorillastringformat)
+  - [gorilla.width](#gorillawidth)
 
 
 
@@ -266,6 +268,8 @@ gorilla.find("li").get(0).css({
 
 ### gorilla.create
 
+Returns the element.
+
 Wrapper for `document.createElement`.
 
 ```javascript
@@ -280,6 +284,10 @@ gorilla.create("input")
 
 Helper for setting and getting `data-` attributes.
 
+#### Set single `data-` attribute
+
+Returns the element.
+
 Set one `data-` attribute (set `data-autosuggest` to string `true`):
 
 ```javascript
@@ -287,7 +295,9 @@ gorilla.create("input")
         .data("autosuggest", "true");
 ```
 
-Set multiple `data-attributes` at once:
+#### Set multiple `data-` attributes at once
+
+Returns the element.
 
 ```javascript
 gorilla.create("input")
@@ -298,12 +308,37 @@ gorilla.create("input")
         });
 ```
 
+#### Get single `data-` value
+
+Returns a string or null.
+
 Get `data-` value (get the value for `data-autosuggest`):
 
 ```javascript
 gorilla.find("input").get(0).data("autosuggest");
 ```
- 
+
+#### Get multiple `data-` values at once
+
+Returns JSON.
+
+```javascript
+gorilla.find("input").get(0).data([
+  "autosuggest",
+  "timeout"
+]);
+```
+
+The output would look something like this:
+
+```json
+{
+  "autosuggest": "true",
+  "timeout": "25000"
+}
+```
+
+
 
 ### gorilla.DOMReady
 
@@ -361,6 +396,29 @@ Should return;
         "param1": "value1",
         "param2": "value2"
 }
+```
+
+
+
+### gorilla.height
+
+Setter and getter for (DOM-)element height.
+
+Usage:
+
+```javascript
+gorilla.height(el); // get the height of el
+gorilla.find("ul").get(0).height(); // get the height of the first <ul> tag.
+```
+
+Set the height (numbers only - translated to px):
+
+```javascript
+gorilla.height(el, 200); // set height of el to 200px
+// this translates to el.style.height = '200px';
+
+// set the height of the first <ul> tag to 200px
+gorilla.find("ul").get(0).height(200);
 ```
 
 
@@ -528,6 +586,29 @@ Or with more human friendly variables (because everything is a string 😜)
 
 ```javascript
 gorilla.stringFormat("I have %count dogs and I really %mood them.", 3, "adore");
+```
+
+
+
+### gorilla.width
+
+Setter and getter for (DOM-)element width.
+
+Usage:
+
+```javascript
+gorilla.width(el); // get the width of el
+gorilla.find("ul").get(0).width(); // get the width of the first <ul> tag.
+```
+
+Set the width (numbers only - translated to px):
+
+```javascript
+gorilla.width(el, 200); // set width of el to 200px
+// this translates to el.style.width = '200px';
+
+// set the width of the first <ul> tag to 200px
+gorilla.find("ul").get(0).width(200);
 ```
 
 
