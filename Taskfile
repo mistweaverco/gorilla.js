@@ -41,6 +41,10 @@ function build-compat {
         _minify-js "gorilla.compat.js" "gorilla.compat.min.js"
 }
 
+function build-all {
+        build && build-compat
+}
+
 function watch {
         local watchdir="./src/"
         _logger "Watcher started"
