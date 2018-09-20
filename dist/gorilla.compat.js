@@ -2024,6 +2024,43 @@ gorilla.create = function (name, options) {
         }
         return gorilla.find(el).get(0);
 };
+gorilla.css = function (el, def) {
+        "use strict";
+
+        var stylestr = "";
+        var returnvalue = el;
+        var s = void 0;
+        switch (typeof def === "undefined" ? "undefined" : _typeof(def)) {
+                case "string":
+                        s = window.getComputedStyle(el);
+                        returnvalue = s.getPropertyValue(def);
+                        break;
+                case "object":
+                        if (Reflect.has(def, "length")) {
+                                s = window.getComputedStyle(el);
+                                returnvalue = {};
+                                gorilla.each(def, function (csskey) {
+                                        returnvalue[csskey] = s.getPropertyValue(csskey);
+                                });
+                        } else {
+                                gorilla.each(def, function (cssvalue, csskey) {
+                                        stylestr = stylestr + csskey + ":" + cssvalue + ";";
+                                });
+                                el.setAttribute("style", stylestr);
+                        }
+                        break;
+                case "undefined":
+                        s = window.getComputedStyle(el);
+                        returnvalue = {};
+                        gorilla.each(s, function (csskey) {
+                                returnvalue[csskey] = s.getPropertyValue(csskey);
+                        });
+                        break;
+                default:
+                        break;
+        }
+        return returnvalue;
+};
 gorilla.DOMReady = function (cb) {
         "use strict";
 
@@ -2038,10 +2075,18 @@ gorilla.DOMReady = function (cb) {
 gorilla.each = function (arr, cb) {
         "use strict";
 
-        var i = 0;
-        var len = arr.length;
-        for (; i < len; i++) {
-                cb(arr[i], i);
+        if (arr.length) {
+                var i = 0;
+                var len = arr.length;
+                for (; i < len; i++) {
+                        cb(arr[i], i);
+                }
+        } else {
+                for (var k in arr) {
+                        if (Reflect.has(arr, k)) {
+                                cb(arr[k], k);
+                        }
+                }
         }
         return arr;
 };
@@ -2092,6 +2137,12 @@ gorilla.find = function (sel, ref) {
                 };
                 el.remove = function () {
                         return gorilla.remove(this);
+                };
+                el.css = function (def) {
+                        return gorilla.css(this, def);
+                };
+                el.offset = function () {
+                        return gorilla.offset(this);
                 };
                 el_arr.push(el);
         };
@@ -2224,6 +2275,15 @@ gorilla.nodes = function (el) {
                 child_arr.push(gorilla.find(child).get(0));
         }
         return child_arr;
+};
+gorilla.offset = function (el) {
+        "use strict";
+
+        var _offset = el.getBoundingClientRect();
+        return {
+                top: _offset.top,
+                left: _offset.left
+        };
 };
 gorilla.on = function (el, eventName, cb) {
         "use strict";

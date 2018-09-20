@@ -39,6 +39,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.attr](#gorillaattr)
   - [gorilla.before](#gorillabefore)
   - [gorilla.compareJSON](#gorillacomparejson)
+  - [gorilla.css](#gorillacss)
   - [gorilla.create](#gorillacreate)
   - [gorilla.DOMReady](#gorilladomready)
   - [gorilla.find](#gorillafind)
@@ -200,6 +201,54 @@ console.log(gorilla.compareJSON(json1, json2);
 // This should return false, because they lack have the same
 // properties, but not the same values for each property
 console.log(gorilla.compareJSON(json3, json4);
+```
+
+
+
+### gorilla.css
+
+Gets the `getComputedStyle` for an element.
+Also can set CSS styles (`<div style="color:red;border:1px solid black;">`).
+
+When used as a setter, it returns the element itself.
+When used as a getter, it returns the values.
+
+Get specific CSS style:
+
+```javascript
+gorilla.css(el, "color");
+// or
+gorilla.find("li").get(0).css("color");
+```
+
+Get all CSS styles:
+
+```javascript
+gorilla.css(el);
+// or
+gorilla.find("li").get(0).css();
+```
+
+Get specific CSS styles:
+
+```javascript
+gorilla.css(el, ["color", "border"]);
+// or
+gorilla.find("li").get(0).css(["color", "border"]);
+```
+
+Set CSS styles:
+
+```javascript
+gorilla.css(el, {
+        color: "#f00",
+        border: "1px solid #000"
+});
+// or
+gorilla.find("li").get(0).css({
+        color: "#f00",
+        border: "1px solid #000"
+});
 ```
 
 
@@ -443,7 +492,7 @@ Or with more human friendly variables (because everything is a string 😜)
 ```javascript
 gorilla.stringFormat("I have %count dogs and I really %mood them.", 3, "adore");
 ```
- 
+
 
 
 ## Credits

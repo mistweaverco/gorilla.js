@@ -147,6 +147,49 @@ gorilla.create = function(name, options) {
         }
         return gorilla.find(el).get(0);
 };
+gorilla.css = function(el, def) {
+        "use strict";
+        let stylestr = "";
+        let returnvalue = el;
+        let s;
+        switch (typeof def) {
+                case "string":
+                        s = window.getComputedStyle(el);
+                        returnvalue = s.getPropertyValue(def);
+                        break;
+                case "object":
+                        if (Reflect.has(def, "length")) {
+                                s = window.getComputedStyle(el);
+                                returnvalue = {};
+                                gorilla.each(def, (csskey) => {
+                                        returnvalue[
+                                                csskey
+                                        ] = s.getPropertyValue(csskey);
+                                });
+                        } else {
+                                gorilla.each(def, (cssvalue, csskey) => {
+                                        stylestr =
+                                                stylestr +
+                                                csskey +
+                                                ":" +
+                                                cssvalue +
+                                                ";";
+                                });
+                                el.setAttribute("style", stylestr);
+                        }
+                        break;
+                case "undefined":
+                        s = window.getComputedStyle(el);
+                        returnvalue = {};
+                        gorilla.each(s, (csskey) => {
+                                returnvalue[csskey] = s.getPropertyValue(csskey);
+                        });
+                        break;
+                default:
+                        break;
+        }
+        return returnvalue;
+};
 gorilla.DOMReady = function(cb) {
         "use strict";
         if (document.readyState === "complete") {
@@ -159,10 +202,18 @@ gorilla.DOMReady = function(cb) {
 };
 gorilla.each = function(arr, cb) {
         "use strict";
-        let i = 0;
-        let len = arr.length;
-        for (; i < len; i++) {
-                cb(arr[i], i);
+        if (arr.length) {
+                let i = 0;
+                let len = arr.length;
+                for (; i < len; i++) {
+                        cb(arr[i], i);
+                }
+        } else {
+                for (let k in arr) {
+                        if (Reflect.has(arr, k)) {
+                                cb(arr[k], k);
+                        }
+                }
         }
         return arr;
 };
@@ -209,6 +260,12 @@ gorilla.find = function(sel, ref) {
                 };
                 el.remove = function() {
                         return gorilla.remove(this);
+                };
+                el.css = function(def) {
+                        return gorilla.css(this, def);
+                };
+                el.offset = function() {
+                        return gorilla.offset(this);
                 };
                 el_arr.push(el);
         };
@@ -343,6 +400,14 @@ gorilla.nodes = function(el) {
                 child_arr.push(gorilla.find(child).get(0));
         }
         return child_arr;
+};
+gorilla.offset = function(el) {
+        "use strict";
+        const _offset = el.getBoundingClientRect();
+        return {
+                top: _offset.top,
+                left: _offset.left
+        };
 };
 gorilla.on = function(el, eventName, cb) {
         "use strict";
