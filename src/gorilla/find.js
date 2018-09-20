@@ -48,9 +48,16 @@ gorilla.find = function(sel, ref) {
                 el.css = function(def) {
                         return gorilla.css(this, def);
                 };
+                el.width = function(val) {
+                        return gorilla.width(this, val);
+                };
+                el.height = function(val) {
+                        return gorilla.height(this, val);
+                };
                 el.offset = function() {
                         return gorilla.offset(this);
                 };
+                el.__isGorilla = true;
                 el_arr.push(el);
         };
         if (sel) {
@@ -66,7 +73,11 @@ gorilla.find = function(sel, ref) {
                         els = [sel];
                 }
                 for (i = 0, len = els.length; i < len; i++) {
-                        forEachElementCallback(els[i]);
+                        if (Reflect.has(els[i], "__isGorilla") === false) {
+                                forEachElementCallback(els[i]);
+                        } else {
+                                el_arr.push(els[i]);
+                        }
                 }
                 el_arr.each = function(cb) {
                         return gorilla.each(this, cb);
