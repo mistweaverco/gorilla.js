@@ -41,6 +41,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.compareJSON](#gorillacomparejson)
   - [gorilla.css](#gorillacss)
   - [gorilla.create](#gorillacreate)
+  - [gorilla.data](#gorilladata)
   - [gorilla.DOMReady](#gorilladomready)
   - [gorilla.find](#gorillafind)
   - [gorilla.getUnixtime](#gorillagetunixtime)
@@ -274,6 +275,35 @@ gorilla.create("input")
 ```
 
 
+
+### gorilla.data
+
+Helper for setting and getting `data-` attributes.
+
+Set one `data-` attribute (set `data-autosuggest` to string `true`):
+
+```javascript
+gorilla.create("input")
+        .data("autosuggest", "true");
+```
+
+Set multiple `data-attributes` at once:
+
+```javascript
+gorilla.create("input")
+        .data({
+                autosuggest: true,
+                timeout: false
+                keynav: true
+        });
+```
+
+Get `data-` value (get the value for `data-autosuggest`):
+
+```javascript
+gorilla.find("input").get(0).data("autosuggest");
+```
+ 
 
 ### gorilla.DOMReady
 

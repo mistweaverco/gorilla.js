@@ -6,6 +6,9 @@ gorilla.find = function(sel, ref) {
                 el.find = function(sel1) {
                         return gorilla.find(sel1, this);
                 };
+                el.data = function(k, v) {
+                        return gorilla.data(this, k, v);
+                };
                 el.on = function(eventName, cb) {
                         return gorilla.on(this, eventName, cb);
                 };
