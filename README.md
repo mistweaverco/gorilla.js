@@ -449,7 +449,8 @@ gorilla.find("li").get(0).remove();
 
 ### gorilla.serialize
 
-Encode a set of form elements (or an array of arrays) as a string for submission.
+Encode a set of form elements (or JSON/JavaScript Object) as a string
+for submission.
 
 Serialize Form-data:
 
@@ -457,29 +458,25 @@ Serialize Form-data:
 gorilla.serialize(gorilla.find("form").get(0));
 ```
 
-Serialze array of arrays:
+Serialze JSON:
 
 ```javascript
-gorilla.serialize([
-  ["id", 1],
-  ["name", "Gorilla Moe"],
-  ["title", "Blogpost #1"],
-  ["content", "Awesome content goes here.."],
-  ["tags",
-    [
-      [0, "javascript"],
-      [1, "golang"],
-      [2, "php"],
-      [3,
-        [
-          [0, "foo"],
-          [1, "bar"],
-          [2, "baz"],
-        ]
-      ]
-    ]
-  ]
-]);
+gorilla.serialize({
+  id: 1,
+  name: "Gorilla Moe",
+  title: "Blogpost #1",
+  content: "Awesome content goes here..",
+  tags: {
+    0: "javascript",
+    1: "golang",
+    2: "php",
+    3: {
+      0: "foo",
+      1: "bar",
+      2: "baz"
+    }
+  }
+});
 
 // Returns
 // id=1&name=Gorilla%20Moe&title=Blogpost%20%231&content=Awesome%20content%20goes%20here..&tags[0]=javascript&tags[1]=golang&tags[2]=php&tags[3][0]=foo&tags[3][1]=bar&tags[3][2]=baz
