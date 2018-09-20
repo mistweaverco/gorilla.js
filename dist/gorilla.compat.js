@@ -1974,12 +1974,23 @@ gorilla.attr = function (el, key, value) {
 
         var returnvalue = void 0;
         returnvalue = el;
-        if (value) {
-                el.setAttribute(key, value);
-        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object" && !key.length) {
-                gorilla.each(key, function (v, k) {
-                        el.setAttribute(k, v);
-                });
+        if (typeof value !== "undefined") {
+                if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
+                        value = JSON.stringify(value);
+                }
+                el.setAttribute(key, String(value));
+        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object") {
+                if (key.length) {
+                        var list = {};
+                        gorilla.each(key, function (k) {
+                                list[k] = el.getAttribute(k);
+                        });
+                        returnvalue = list;
+                } else {
+                        gorilla.each(key, function (v, k) {
+                                el.setAttribute(k, String(v));
+                        });
+                }
         } else {
                 returnvalue = el.getAttribute(key);
         }
@@ -2070,18 +2081,26 @@ gorilla.data = function (el, key, value) {
 
         var returnvalue = void 0;
         returnvalue = el;
-        if (value) {
+        if (typeof value !== "undefined") {
                 if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
                         value = JSON.stringify(value);
                 }
-                el.setAttribute("data-" + key, value);
-        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object" && !key.length) {
-                gorilla.each(key, function (v, k) {
-                        if ((typeof v === "undefined" ? "undefined" : _typeof(v)) === "object") {
-                                v = JSON.stringify(v);
-                        }
-                        el.setAttribute("data-" + k, v);
-                });
+                el.setAttribute("data-" + key, String(value));
+        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object") {
+                if (key.length) {
+                        var list = {};
+                        gorilla.each(key, function (k) {
+                                list[k] = el.getAttribute("data-" + k);
+                        });
+                        returnvalue = list;
+                } else {
+                        gorilla.each(key, function (v, k) {
+                                if ((typeof v === "undefined" ? "undefined" : _typeof(v)) === "object") {
+                                        v = JSON.stringify(v);
+                                }
+                                el.setAttribute("data-" + k, String(v));
+                        });
+                }
         } else {
                 returnvalue = el.getAttribute("data-" + key);
         }
@@ -2170,9 +2189,16 @@ gorilla.find = function (sel, ref) {
                 el.css = function (def) {
                         return gorilla.css(this, def);
                 };
+                el.width = function (val) {
+                        return gorilla.width(this, val);
+                };
+                el.height = function (val) {
+                        return gorilla.height(this, val);
+                };
                 el.offset = function () {
                         return gorilla.offset(this);
                 };
+                el.__isGorilla = true;
                 el_arr.push(el);
         };
         if (sel) {
@@ -2188,7 +2214,11 @@ gorilla.find = function (sel, ref) {
                         els = [sel];
                 }
                 for (i = 0, len = els.length; i < len; i++) {
-                        forEachElementCallback(els[i]);
+                        if (Reflect.has(els[i], "__isGorilla") === false) {
+                                forEachElementCallback(els[i]);
+                        } else {
+                                el_arr.push(els[i]);
+                        }
                 }
                 el_arr.each = function (cb) {
                         return gorilla.each(this, cb);
@@ -2234,6 +2264,17 @@ gorilla.getURLParams = function (url) {
                 params[p[0].toString()] = p[1];
         });
         return params;
+};
+gorilla.height = function (el, val) {
+        "use strict";
+
+        var returnvalue = el;
+        if (val === undefined) {
+                returnvalue = el.getBoundingClientRect().height;
+        } else {
+                el.style.height = val + "px";
+        }
+        return returnvalue;
 };
 gorilla.html = function (el, value) {
         "use strict";
@@ -2403,3 +2444,14 @@ gorilla.stringFormat = function () {
         };
 }();
 gorilla.version = "1.0.0";
+gorilla.width = function (el, val) {
+        "use strict";
+
+        var returnvalue = el;
+        if (val === undefined) {
+                returnvalue = el.getBoundingClientRect().width;
+        } else {
+                el.style.width = val + "px";
+        }
+        return returnvalue;
+};
