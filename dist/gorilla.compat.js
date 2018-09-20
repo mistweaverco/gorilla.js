@@ -1976,6 +1976,10 @@ gorilla.attr = function (el, key, value) {
         returnvalue = el;
         if (value) {
                 el.setAttribute(key, value);
+        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object") {
+                gorilla.each(key, function (v, k) {
+                        el.setAttribute(k, v);
+                });
         } else {
                 returnvalue = el.getAttribute(key);
         }

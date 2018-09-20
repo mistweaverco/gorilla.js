@@ -155,6 +155,16 @@ gorilla.find("a").get(0).attr("href")
 gorilla.find("a").get(0).attr("href", "#foo");
 ```
 
+Set multiple values at once:
+
+```javascript
+gorilla.find("a").get(0).attr({
+  "href": "test.html",
+  "data-foo": "baz",
+  "data-bar": "foo"
+});
+```
+
 
 
 ### gorilla.before
