@@ -1976,7 +1976,7 @@ gorilla.attr = function (el, key, value) {
         returnvalue = el;
         if (value) {
                 el.setAttribute(key, value);
-        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object") {
+        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object" && !key.length) {
                 gorilla.each(key, function (v, k) {
                         el.setAttribute(k, v);
                 });
@@ -2065,6 +2065,28 @@ gorilla.css = function (el, def) {
         }
         return returnvalue;
 };
+gorilla.data = function (el, key, value) {
+        "use strict";
+
+        var returnvalue = void 0;
+        returnvalue = el;
+        if (value) {
+                if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
+                        value = JSON.stringify(value);
+                }
+                el.setAttribute("data-" + key, value);
+        } else if ((typeof key === "undefined" ? "undefined" : _typeof(key)) === "object" && !key.length) {
+                gorilla.each(key, function (v, k) {
+                        if ((typeof v === "undefined" ? "undefined" : _typeof(v)) === "object") {
+                                v = JSON.stringify(v);
+                        }
+                        el.setAttribute("data-" + k, v);
+                });
+        } else {
+                returnvalue = el.getAttribute("data-" + key);
+        }
+        return returnvalue;
+};
 gorilla.DOMReady = function (cb) {
         "use strict";
 
@@ -2105,6 +2127,9 @@ gorilla.find = function (sel, ref) {
         var forEachElementCallback = function forEachElementCallback(el) {
                 el.find = function (sel1) {
                         return gorilla.find(sel1, this);
+                };
+                el.data = function (k, v) {
+                        return gorilla.data(this, k, v);
                 };
                 el.on = function (eventName, cb) {
                         return gorilla.on(this, eventName, cb);
@@ -2317,47 +2342,45 @@ gorilla.remove = function (el) {
 
         el.parentNode.removeChild(el);
 };
-gorilla.serialize = function (arr, opts) {
+gorilla.serialize = function (list, opts) {
         "use strict";
 
         opts = opts || {};
 
-        if (arr.tagName && arr.tagName === "FORM") {
-                var array = [],
-                    items = arr.elements;
+        if (list.tagName && list.tagName === "FORM") {
+                var datalist = {},
+                    items = list.elements;
                 gorilla.each(items, function (el) {
                         if (el.name && el.name !== "") {
-                                array.push([el.name, el.value]);
+                                datalist[el.name] = el.value;
                         }
                 });
-                return gorilla.serialize(array);
+                return gorilla.serialize(datalist);
         }
 
         var data = [];
         var delimiter = opts.delimiter || "&";
         var q = opts.q || false;
 
-        gorilla.each(arr, function (v) {
-                switch (_typeof(v[1])) {
+        gorilla.each(list, function (v, k) {
+                switch (typeof v === "undefined" ? "undefined" : _typeof(v)) {
                         case "boolean":
                         case "string":
                         case "number":
                                 if (opts.parentName) {
-                                        data.push(opts.parentName + "[" + v[0] + "]=" + encodeURIComponent(v[1]));
+                                        data.push(opts.parentName + "[" + k + "]=" + encodeURIComponent(v));
                                 } else {
-                                        data.push(v[0] + "=" + encodeURIComponent(v[1]));
+                                        data.push(k + "=" + encodeURIComponent(v));
                                 }
                                 break;
                         case "object":
-                                if (v[1].length) {
-                                        if (opts.parentName) {
-                                                v[0] = opts.parentName + "[" + v[0] + "]";
-                                        }
-                                        data.push(gorilla.serialize(v[1], {
-                                                delimiter: opts.delimiter,
-                                                parentName: v[0]
-                                        }));
+                                if (opts.parentName) {
+                                        k = opts.parentName + "[" + k + "]";
                                 }
+                                data.push(gorilla.serialize(v, {
+                                        delimiter: opts.delimiter,
+                                        parentName: k
+                                }));
                                 break;
                         default:
                                 break;
