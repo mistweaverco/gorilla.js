@@ -9,11 +9,11 @@ gorilla.js 🦍 - the only javascript utility library 🦄 you'll ever need.
 
 ## Small
 
-Minified 5,580 bytes 💪;
-Minified and Gzipped only 1,858 bytes 🔥!
+Minified 6.41 KB 💪;
+Minified and Gzipped only 2.6 KB bytes 🔥!
 
-jQuery 3.0.0-alpha1 is 84,522 bytes 😢;
-Minified and Gzipped still a whopping 🍔 29,475 bytes 🙈.
+jQuery 3.0.0-alpha1 is 85 KB 😢;
+Minified and Gzipped still a whopping 🍔 29 KB 🙈.
 
 
 
