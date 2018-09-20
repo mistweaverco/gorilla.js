@@ -42,6 +42,9 @@ gorilla.find = function(sel, ref) {
                 el.remove = function() {
                         return gorilla.remove(this);
                 };
+                el.css = function(def) {
+                        return gorilla.css(this, def);
+                };
                 el.offset = function() {
                         return gorilla.offset(this);
                 };
