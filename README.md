@@ -590,6 +590,40 @@ gorilla.stringFormat("I have %count dogs and I really %mood them.", 3, "adore");
 
 
 
+### gorilla.waitForElementToBePresent
+
+Waits for DOM-Element to become present (/available).
+
+Usage:
+
+```javascript
+// wait for element with id foobar to become ready
+gorilla.waitForElementToBePresent("#foobar", (err, res) => {
+        if (err) return console.log(err);
+        console.log(res);
+});
+// append div#foobar after 2.5 seconds to the body tag
+setTimeout(() => {
+  document.body.appendChild(gorilla.create("div").attr("id","foobar"));
+},2500);
+```
+
+Check every 200ms for element to become available, for a total of 10 seconds;
+then fail.
+
+```javascript
+// wait for element with id foobar to become ready
+gorilla.waitForElementToBePresent("#foobar", (err, res) => {
+        if (err) return console.log(err);
+        console.log(res);
+}, {
+        timeout: 10000,
+        interval: 200
+});
+```
+
+
+
 ### gorilla.width
 
 Setter and getter for (DOM-)element width.
