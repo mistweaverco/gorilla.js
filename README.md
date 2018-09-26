@@ -55,6 +55,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.remove](#gorillaremove)
   - [gorilla.serialize](#gorillaserialize)
   - [gorilla.stringFormat](#gorillastringformat)
+  - [gorilla.waitForElementToBePresent](#gorillawaitforelementtobepresent)
   - [gorilla.width](#gorillawidth)
 
 
