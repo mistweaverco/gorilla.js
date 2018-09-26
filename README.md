@@ -38,6 +38,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.append](#gorillappend)
   - [gorilla.attr](#gorillaattr)
   - [gorilla.before](#gorillabefore)
+  - [gorilla.copyToClipboard](#gorillacopytoclipboard)
   - [gorilla.compareJSON](#gorillacomparejson)
   - [gorilla.css](#gorillacss)
   - [gorilla.create](#gorillacreate)
@@ -179,6 +180,17 @@ Wrapper for `insertBefore`.
 var newFirstListElement = gorilla.create("li").html("First List Element");
 // Insert `newFirstListElement` before the first `li` found.
 gorilla.find("li").get(0).before(newFirstListElement);
+```
+
+
+
+### gorilla.copyToClipboard
+
+Copies text to the clipboard.
+
+```javascript
+let text = "This is some awesome text.";
+gorilla.copyToClipboard(text);
 ```
 
 
