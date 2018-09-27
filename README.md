@@ -607,6 +607,15 @@ gorilla.stringFormat("I have %count dogs and I really %mood them.", 3, "adore");
 
 Waits for DOM-Element to become present (/available).
 
+The default interval (`opts.interval=200`) it checks for the existence
+of the element is 200ms.
+
+The default timeout (`opts.timeout=5000`) it errors out (`return cb(err, null)`)
+when the element is not found is 5000ms.
+
+If `opts.timeout` is set to `Number.Infinity` it will keep checking for the
+element indefinitely.
+
 Usage:
 
 ```javascript
