@@ -382,6 +382,21 @@ gorilla.getFileContents = function(file, cb) {
                 cb("file ref not found", null, null);
         }
 };
+gorilla.getParsedURL = function(url) {
+        "use strict";
+        const l = document.createElement("a");
+        l.setAttribute("href", url);
+        return {
+                hash: l.hash,
+                host: l.host,
+                hostname: l.hostname,
+                href: l.host,
+                pathname: l.pathname,
+                port: l.port && l.port.length > 0 ? l.port : undefined,
+                protocol: l.protocol.replace(":", ""),
+                search: l.search
+        };
+};
 gorilla.getUnixtime = function() {
         "use strict";
         return parseInt(Math.floor(Date.now() / 1000), 10);
@@ -565,6 +580,10 @@ gorilla.serialize = (list, opts) => {
         });
         return (q === true ? "?" : "") + data.join(delimiter);
 };
+gorilla.stringEndsWith = (haystack, needle) => {
+        "use strict";
+        return haystack.indexOf(needle, haystack.length - needle.length) !== -1;
+};
 gorilla.stringFormat = (() => {
         "use strict";
         return function(str, ...replace) {
@@ -574,7 +593,7 @@ gorilla.stringFormat = (() => {
                 return str;
         };
 })();
-gorilla.version = "2.0.0";
+gorilla.version = "2.1.0";
 gorilla.waitForElementToBePresent = function(sel, cb, opts) {
         "use strict";
         opts = opts || {};
