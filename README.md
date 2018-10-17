@@ -45,8 +45,9 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.data](#gorilladata)
   - [gorilla.DOMReady](#gorilladomready)
   - [gorilla.find](#gorillafind)
-  - [gorilla.getUnixtime](#gorillagetunixtime)
+  - [gorilla.getParsedURL](#gorillagetparsedurl)
   - [gorilla.getURLParams](#gorillageturlparams)
+  - [gorilla.getUnixtime](#gorillagetunixtime)
   - [gorilla.height](#gorillaheight)
   - [gorilla.html](#gorillahtml)
   - [gorilla.loadCSS](#gorillaloadcss)
@@ -55,6 +56,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.prepend](#gorillaprepend)
   - [gorilla.remove](#gorillaremove)
   - [gorilla.serialize](#gorillaserialize)
+  - [gorilla.stringEndsWith](#gorillastringendswith)
   - [gorilla.stringFormat](#gorillastringformat)
   - [gorilla.waitForElementToBePresent](#gorillawaitforelementtobepresent)
   - [gorilla.width](#gorillawidth)
@@ -384,6 +386,31 @@ gorilla.find("ul").get(0)
 
 
 
+### gorilla.getParsedURL
+
+Returns a parsed URL object.
+
+```javascript
+gorilla.getParsedURL("https://cdn.gorilla.moe/conor-mcgregor-song.mp4?gorilla=moe#hashicorp");
+```
+
+Returns
+
+```json
+{
+        "hash": "#hashicorp",
+        "host": "cdn.gorilla.moe",
+        "hostname": "cdn.gorilla.moe",
+        "href": "cdn.gorilla.moe",
+        "pathname": "/conor-mcgregor-song.mp4",
+        "port": undefined,
+        "protocol": "https",
+        "search": "?gorilla=moe"
+}
+```
+
+
+
 ### gorilla.getUnixtime
 
 Returns the current UNIX-Timestamp.
@@ -581,6 +608,21 @@ gorilla.serialize({
 
 // Returns
 // id=1&name=Gorilla%20Moe&title=Blogpost%20%231&content=Awesome%20content%20goes%20here..&tags[0]=javascript&tags[1]=golang&tags[2]=php&tags[3][0]=foo&tags[3][1]=bar&tags[3][2]=baz
+```
+
+
+
+### gorilla.stringEndsWith
+
+Returns true if the `haystack` string ends with the `needle` string.
+
+Usage:
+
+```javascript
+// Returns true
+gorilla.stringEndsWith("This haystack ends with", "with");
+// Returns false
+gorilla.stringEndsWith("This haystack ends with foo", "with");
 ```
 
 
