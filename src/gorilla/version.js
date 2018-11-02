@@ -1,1 +1,1 @@
-gorilla.version = "2.1.0";
+gorilla.version = "2.2.0";

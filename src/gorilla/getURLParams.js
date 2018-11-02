@@ -1,5 +1,6 @@
 gorilla.getURLParams = function(url) {
         "use strict";
+        url = url || window.location.search;
         let params = {};
         let link = document.createElement("a");
         link.setAttribute("href", url);

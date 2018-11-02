@@ -2286,6 +2286,7 @@ gorilla.getUnixtime = function () {
 gorilla.getURLParams = function (url) {
         "use strict";
 
+        url = url || window.location.search;
         var params = {};
         var link = document.createElement("a");
         link.setAttribute("href", url);
@@ -2481,7 +2482,7 @@ gorilla.stringFormat = function () {
                 return str;
         };
 }();
-gorilla.version = "2.1.0";
+gorilla.version = "2.2.0";
 gorilla.waitForElementToBePresent = function (sel, cb, opts) {
         "use strict";
 
