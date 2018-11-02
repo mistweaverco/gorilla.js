@@ -517,7 +517,7 @@ gorilla.log = (t) => {
                                 ";color:" +
                                 c.fg +
                                 ";padding:5px;",
-                        logs
+                        ...logs
                 );
         };
 };
@@ -629,7 +629,7 @@ gorilla.stringFormat = (() => {
                 return str;
         };
 })();
-gorilla.version = "2.3.0";
+gorilla.version = "2.4.0";
 gorilla.waitForElementToBePresent = function(sel, cb, opts) {
         "use strict";
         opts = opts || {};

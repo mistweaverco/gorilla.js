@@ -2384,11 +2384,13 @@ gorilla.log = function (t) {
         if (t in colors === false) t = "info";
         var c = colors[t];
         return function () {
+                var _window$console;
+
                 for (var _len = arguments.length, logs = Array(_len), _key = 0; _key < _len; _key++) {
                         logs[_key] = arguments[_key];
                 }
 
-                window.console.log("%c🦍", "background:" + c.bg + ";color:" + c.fg + ";padding:5px;", logs);
+                (_window$console = window.console).log.apply(_window$console, ["%c🦍", "background:" + c.bg + ";color:" + c.fg + ";padding:5px;"].concat(logs));
         };
 };
 gorilla.next = function (el) {
@@ -2514,7 +2516,7 @@ gorilla.stringFormat = function () {
                 return str;
         };
 }();
-gorilla.version = "2.3.0";
+gorilla.version = "2.4.0";
 gorilla.waitForElementToBePresent = function (sel, cb, opts) {
         "use strict";
 

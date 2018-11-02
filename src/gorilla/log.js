@@ -29,7 +29,7 @@ gorilla.log = (t) => {
                                 ";color:" +
                                 c.fg +
                                 ";padding:5px;",
-                        logs
+                        ...logs
                 );
         };
 };
