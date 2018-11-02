@@ -2359,6 +2359,38 @@ gorilla.loadJS = function (url) {
                 return gorilla.find("script").get(0).prepend(s);
         });
 };
+gorilla.log = function (t) {
+        "use strict";
+
+        t = t || "info";
+        var colors = {
+                info: {
+                        bg: "#19cf85",
+                        fg: "#272b30"
+                },
+                warn: {
+                        bg: "#ffd866",
+                        fg: "#272b30"
+                },
+                debug: {
+                        bg: "#3c92d1",
+                        fg: "#272b30"
+                },
+                error: {
+                        bg: "#ff6188",
+                        fg: "#272b30"
+                }
+        };
+        if (t in colors === false) t = "info";
+        var c = colors[t];
+        return function () {
+                for (var _len = arguments.length, logs = Array(_len), _key = 0; _key < _len; _key++) {
+                        logs[_key] = arguments[_key];
+                }
+
+                window.console.log("%c🦍", "background:" + c.bg + ";color:" + c.fg + ";padding:5px;", logs);
+        };
+};
 gorilla.next = function (el) {
         "use strict";
 
@@ -2472,8 +2504,8 @@ gorilla.stringFormat = function () {
         "use strict";
 
         return function (str) {
-                for (var _len = arguments.length, replace = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                        replace[_key - 1] = arguments[_key];
+                for (var _len2 = arguments.length, replace = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+                        replace[_key2 - 1] = arguments[_key2];
                 }
 
                 replace.forEach(function (re) {
@@ -2482,7 +2514,7 @@ gorilla.stringFormat = function () {
                 return str;
         };
 }();
-gorilla.version = "2.2.0";
+gorilla.version = "2.3.0";
 gorilla.waitForElementToBePresent = function (sel, cb, opts) {
         "use strict";
 

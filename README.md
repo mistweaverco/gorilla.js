@@ -52,6 +52,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.html](#gorillahtml)
   - [gorilla.loadCSS](#gorillaloadcss)
   - [gorilla.loadJS](#gorillaloadjs)
+  - [gorilla.log](#gorillalog)
   - [gorilla.on](#gorillaon)
   - [gorilla.prepend](#gorillaprepend)
   - [gorilla.remove](#gorillaremove)
@@ -536,6 +537,28 @@ gorilla.loadJS("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js")
 })
 .catch((err) => console.log(err));
 ```
+
+
+
+### gorilla.log
+
+Sexy wrapper around `console.log`, `console.warn`, `console.debug` and
+`console.error`.
+
+```javascript
+// defaults to info (green)
+gorilla.log()("Hello there.", "hai", 1, true, {foo: true, bar: 'baz'});
+// explicitly call info (green)
+gorilla.log("info")("Hello there.", "hai", 1, true, {foo: true, bar: 'baz'});
+// warn (yellow)
+gorilla.log("warn")("Hello there.", "hai", 1, true, {foo: true, bar: 'baz'});
+// error (red)
+gorilla.log("error")("Hello there.", "hai", 1, true, {foo: true, bar: 'baz'});
+// debug (blue)
+gorilla.log("debug")("Hello there.", "hai", 1, true, {foo: true, bar: 'baz'});
+```
+
+
 
 ### gorilla.on
 

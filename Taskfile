@@ -56,6 +56,10 @@ function watch {
         done
 }
 
+function dirty-deploy {
+        scp -r dist/* root@superevilmegaco.com:/www/gorilla.moe/cdn/htdocs/gorilla.js/dist/
+}
+
 function deploy {
         ssh root@superevilmegaco.com "cd /www/gorilla.moe/cdn/htdocs/gorilla.js/ && git pull origin master"
 }
