@@ -9,7 +9,7 @@ gorilla.css = function(el, def) {
                         returnvalue = s.getPropertyValue(def);
                         break;
                 case "object":
-                        if (Reflect.has(def, "length")) {
+                        if (def.length) {
                                 s = window.getComputedStyle(el);
                                 returnvalue = {};
                                 gorilla.each(def, (csskey) => {

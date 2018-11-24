@@ -17,7 +17,7 @@ gorilla.ajax = function(opts) {
                         let arr, key;
                         arr = [];
                         for (key in p) {
-                                if (Reflect.has(p, key)) {
+                                if (p.hasOwnProperty(key)) {
                                         arr.push(encodeURIComponent(key) +
                                                         "=" +
                                                         encodeURIComponent(p[key]));
@@ -29,7 +29,7 @@ gorilla.ajax = function(opts) {
                         let arr, key;
                         arr = [];
                         for (key in h) {
-                                if (Reflect.has(h, key)) {
+                                if (h.hasOwnProperty(key)) {
                                         arr.push({
                                                 key: key,
                                                 value: h[key]

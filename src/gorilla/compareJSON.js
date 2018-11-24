@@ -11,8 +11,8 @@ gorilla.compareJSON = function(json1, json2) {
         };
         const aIsInB = function(a, b) {
                 for (let prop in a) {
-                        if (Reflect.has(prop, a)) {
-                                if (Reflect.has(prop, b)) {
+                        if (prop.hasOwnProperty(a)) {
+                                if (prop.hasOwnProperty(b)) {
                                         return _helper(a, b, prop);
                                 } else {
                                         return false;

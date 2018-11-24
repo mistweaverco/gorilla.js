@@ -8,7 +8,7 @@ gorilla.each = function(arr, cb) {
                 }
         } else {
                 for (let k in arr) {
-                        if (Reflect.has(arr, k)) {
+                        if (arr.hasOwnProperty(k)) {
                                 cb(arr[k], k);
                         }
                 }

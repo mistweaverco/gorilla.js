@@ -1907,7 +1907,7 @@ gorilla.ajax = function (opts) {
                             key = void 0;
                         arr = [];
                         for (key in p) {
-                                if (Reflect.has(p, key)) {
+                                if (p.hasOwnProperty(key)) {
                                         arr.push(encodeURIComponent(key) + "=" + encodeURIComponent(p[key]));
                                 }
                         }
@@ -1918,7 +1918,7 @@ gorilla.ajax = function (opts) {
                             key = void 0;
                         arr = [];
                         for (key in h) {
-                                if (Reflect.has(h, key)) {
+                                if (h.hasOwnProperty(key)) {
                                         arr.push({
                                                 key: key,
                                                 value: h[key]
@@ -2016,8 +2016,8 @@ gorilla.compareJSON = function (json1, json2) {
         };
         var aIsInB = function aIsInB(a, b) {
                 for (var prop in a) {
-                        if (Reflect.has(prop, a)) {
-                                if (Reflect.has(prop, b)) {
+                        if (prop.hasOwnProperty(a)) {
+                                if (prop.hasOwnProperty(b)) {
                                         return _helper(a, b, prop);
                                 } else {
                                         return false;
@@ -2068,7 +2068,7 @@ gorilla.css = function (el, def) {
                         returnvalue = s.getPropertyValue(def);
                         break;
                 case "object":
-                        if (Reflect.has(def, "length")) {
+                        if (def.length) {
                                 s = window.getComputedStyle(el);
                                 returnvalue = {};
                                 gorilla.each(def, function (csskey) {
@@ -2145,7 +2145,7 @@ gorilla.each = function (arr, cb) {
                 }
         } else {
                 for (var k in arr) {
-                        if (Reflect.has(arr, k)) {
+                        if (arr.hasOwnProperty(k)) {
                                 cb(arr[k], k);
                         }
                 }
@@ -2231,7 +2231,7 @@ gorilla.find = function (sel, ref) {
                         els = [sel];
                 }
                 for (i = 0, len = els.length; i < len; i++) {
-                        if (Reflect.has(els[i], "__isGorilla") === false) {
+                        if (els[i].hasOwnProperty("__isGorilla") === false) {
                                 forEachElementCallback(els[i]);
                         } else {
                                 el_arr.push(els[i]);
