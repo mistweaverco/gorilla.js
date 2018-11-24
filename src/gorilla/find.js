@@ -73,10 +73,10 @@ gorilla.find = function(sel, ref) {
                         els = [sel];
                 }
                 for (i = 0, len = els.length; i < len; i++) {
-                        if (els[i].hasOwnProperty("__isGorilla") === false) {
-                                forEachElementCallback(els[i]);
-                        } else {
+                        if (els[i].__isGorilla === true) {
                                 el_arr.push(els[i]);
+                        } else {
+                                forEachElementCallback(els[i]);
                         }
                 }
                 el_arr.each = function(cb) {
