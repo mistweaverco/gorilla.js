@@ -50,6 +50,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.getUnixtime](#gorillagetunixtime)
   - [gorilla.height](#gorillaheight)
   - [gorilla.html](#gorillahtml)
+  - [gorilla.inArray](#gorillainarray)
   - [gorilla.loadCSS](#gorillaloadcss)
   - [gorilla.loadJS](#gorillaloadjs)
   - [gorilla.log](#gorillalog)
@@ -470,6 +471,25 @@ Wrapper for `innerHTML`.
 
 ```javascript
 gorilla.find("a").get(0).html("This is a Hyperlink.");
+```
+
+
+
+### gorilla.inArray
+
+Utility function. Checks for existence of `needle` in `array`.
+
+`gorilla.inArray(array, needle);`
+
+```javascript
+// returns true
+gorilla.inArray([1, 2, 3], 1);
+// returns true
+gorilla.inArray([1, 2, 3], 3);
+// returns true
+gorilla.inArray([1, 2, 3], 2);
+// returns false
+gorilla.inArray([1, 2, 3], 4);
 ```
 
 

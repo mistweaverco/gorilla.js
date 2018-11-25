@@ -2331,6 +2331,21 @@ gorilla.html = function (el, value) {
         }
         return returnvalue;
 };
+gorilla.inArray = function (arr, needle) {
+        "use strict";
+
+        var retval = false;
+        if (arr.length) {
+                var i = 0;
+                var len = arr.length;
+                for (; i < len; i++) {
+                        if (arr[i] === needle) {
+                                retval = true;
+                        }
+                }
+        }
+        return retval;
+};
 gorilla.loadCSS = function (url) {
         "use strict";
 
