@@ -382,6 +382,23 @@ gorilla.getFileContents = function(file, cb) {
                 cb("file ref not found", null, null);
         }
 };
+gorilla.getImageData = function(url) {
+        "use strict";
+        return new Promise((resolve, reject) => {
+                let img;
+                img = new Image();
+                img.onload = function() {
+                        resolve({
+                                width: this.width,
+                                height: this.height
+                        });
+                };
+                img.onerror = function(e) {
+                        reject(e);
+                };
+                img.src = url;
+        });
+};
 gorilla.getParsedURL = function(url) {
         "use strict";
         const l = document.createElement("a");

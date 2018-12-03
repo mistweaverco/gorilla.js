@@ -45,6 +45,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.data](#gorilladata)
   - [gorilla.DOMReady](#gorilladomready)
   - [gorilla.find](#gorillafind)
+  - [gorilla.getImageData](#gorillagetimagedata)
   - [gorilla.getParsedURL](#gorillagetparsedurl)
   - [gorilla.getURLParams](#gorillageturlparams)
   - [gorilla.getUnixtime](#gorillagetunixtime)
@@ -384,6 +385,18 @@ gorilla.find("ul").get(0)
                 evt.preventDefault();
                 alert("click");
         });
+```
+
+
+
+### gorilla.getImageData
+
+Returns a JSON including width and height of the requested image.
+
+```javascript
+gorilla.getImageData("https://gorilla.moe/favicon.ico")
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
 ```
 
 
