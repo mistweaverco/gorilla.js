@@ -47,6 +47,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.find](#gorillafind)
   - [gorilla.getImageData](#gorillagetimagedata)
   - [gorilla.getParsedURL](#gorillagetparsedurl)
+  - [gorilla.getRandomNumer](#gorillagetrandomnumber)
   - [gorilla.getURLParams](#gorillageturlparams)
   - [gorilla.getUnixtime](#gorillagetunixtime)
   - [gorilla.height](#gorillaheight)
@@ -422,6 +423,22 @@ Returns
         "protocol": "https",
         "search": "?gorilla=moe"
 }
+```
+
+
+
+### gorilla.getRandomNumber
+
+Returns a random number.
+
+```javascript
+gorilla.getRandomNumber();
+```
+
+```javascript
+var min = -200; // if omitted, defaults to 0
+var max = 200; //  if omitted, defaults to Number.MAX_SAFE_INTEGER
+gorilla.getRandomNumber(min, max);
 ```
 
 
