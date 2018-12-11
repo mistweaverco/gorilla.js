@@ -57,6 +57,7 @@ There's a `gorilla.compat.min.js` version, which even works in IE9 🚀👻!
   - [gorilla.loadJS](#gorillaloadjs)
   - [gorilla.log](#gorillalog)
   - [gorilla.on](#gorillaon)
+  - [gorilla.one](#gorillaone)
   - [gorilla.prepend](#gorillaprepend)
   - [gorilla.remove](#gorillaremove)
   - [gorilla.serialize](#gorillaserialize)
@@ -621,6 +622,23 @@ gorilla.find("a").get(0).on(function(evt) {
         evt.preventDefault();
         alert("click");
 });
+```
+
+
+
+### gorilla.one
+
+Advanced `querySelector` with attached convenience methods on the element.
+This method returns an element or `null`.
+
+```javascript
+const anchor = gorilla.one("a");
+if (anchor) {
+        gorilla.one("a").on(function(evt) {
+                evt.preventDefault();
+                alert("click");
+        });
+}
 ```
 
 

@@ -2,64 +2,6 @@ gorilla.find = function(sel, ref) {
         "use strict";
         let el_arr, els, i, len;
         el_arr = [];
-        let forEachElementCallback = function(el) {
-                el.find = function(sel1) {
-                        return gorilla.find(sel1, this);
-                };
-                el.data = function(k, v) {
-                        return gorilla.data(this, k, v);
-                };
-                el.on = function(eventName, cb) {
-                        return gorilla.on(this, eventName, cb);
-                };
-                el.attr = function(key, value) {
-                        return gorilla.attr(this, key, value);
-                };
-                el.html = function(value) {
-                        return gorilla.html(this, value);
-                };
-                el.prepend = function(prependEl) {
-                        return gorilla.prepend(this, prependEl);
-                };
-                el.append = function(appendEl) {
-                        return gorilla.append(this, appendEl);
-                };
-                el.after = function(afterEl) {
-                        return gorilla.after(this, afterEl);
-                };
-                el.before = function(beforeEl) {
-                        return gorilla.before(this, beforeEl);
-                };
-                el.parent = function() {
-                        return gorilla.parent(this);
-                };
-                el.next = function() {
-                        return gorilla.next(this);
-                };
-                el.prev = function() {
-                        return gorilla.prev(this);
-                };
-                el.nodes = function() {
-                        return gorilla.nodes(this);
-                };
-                el.remove = function() {
-                        return gorilla.remove(this);
-                };
-                el.css = function(def) {
-                        return gorilla.css(this, def);
-                };
-                el.width = function(val) {
-                        return gorilla.width(this, val);
-                };
-                el.height = function(val) {
-                        return gorilla.height(this, val);
-                };
-                el.offset = function() {
-                        return gorilla.offset(this);
-                };
-                el.__isGorilla = true;
-                el_arr.push(el);
-        };
         if (sel) {
                 if (typeof sel !== "object") {
                         if (ref) {
@@ -73,10 +15,10 @@ gorilla.find = function(sel, ref) {
                         els = [sel];
                 }
                 for (i = 0, len = els.length; i < len; i++) {
-                        if (els[i].__isGorilla === true) {
-                                el_arr.push(els[i]);
+                        if (els[i].__isGorillafiedEl === undefined) {
+                                el_arr.push(gorilla.one(els[i]));
                         } else {
-                                forEachElementCallback(els[i]);
+                                el_arr.push(els[i]);
                         }
                 }
                 el_arr.each = function(cb) {
